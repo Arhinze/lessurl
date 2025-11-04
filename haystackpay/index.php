@@ -61,7 +61,7 @@
         </div>
       </div>
       <div>
-        <span class="tag">Fintech · AI · UX</span>
+        <span class="tag">Fintech · AI ·</span>
       </div>
     </header>
 
@@ -76,8 +76,9 @@
 
           <div class="columns" style="margin-top:20px;">
             <div class="col">
-              <strong>Tagline</strong>
+              <strong>Tagline(s)</strong>
               <p class="muted">HaystackPay — Pay without typing. Talk. Tap. Snap. Done.</p>
+              <p class="muted">HaystackPay — Get it done with ease.</p>
             </div>
             <div class="col">
               <strong>Stage</strong>
