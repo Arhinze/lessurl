@@ -54,7 +54,7 @@
   <div class="wrap">
     <header>
       <div class="brand">
-        <div class="logo"><img src="static/logo.png"/></div>
+        <div class="logo"><img src="static/logo.png" style="width:55px;height:auto"/></div>
         <div>
           <h1>HaystackPay — Pitch Deck</h1>
           <p class="lead">Send money without typing — Talk. Tap. Snap.</p>
