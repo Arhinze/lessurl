@@ -117,6 +117,7 @@
               <li>Voice-initiated transfers</li>
               <li>Automatic OCR for account numbers</li>
               <li>Pay via email or phone</li>
+              <li>Transfer to multiple users at once</li>
             </ul>
           </div>
           <div class="col">
