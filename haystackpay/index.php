@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="icon" type="image/x-icon" href="static/favicon.png"/>
   <title>HaystackPay — Pitch Deck</title>
   <style>
     :root{
@@ -53,7 +54,7 @@
   <div class="wrap">
     <header>
       <div class="brand">
-        <div class="logo">HP</div>
+        <div class="logo"><img src="static/logo.png"/></div>
         <div>
           <h1>HaystackPay — Pitch Deck</h1>
           <p class="lead">Send money without typing — Talk. Tap. Snap.</p>
