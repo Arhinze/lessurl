@@ -176,6 +176,7 @@
           <tr><td>Voice payments</td><td>—</td><td>—</td><td>—</td><td>✓</td></tr>
           <tr><td>Image OCR</td><td>—</td><td>—</td><td>—</td><td>✓</td></tr>
           <tr><td>Pay via phone/email</td><td>—</td><td>✓</td><td>—</td><td>✓</td></tr>
+          <tr><td>Bulk transfer</td><td>—</td><td>-</td><td>—</td><td>✓</td></tr>
         </table>
       </section>
 
