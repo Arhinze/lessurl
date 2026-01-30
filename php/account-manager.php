@@ -1,4 +1,4 @@
-<?php
+<?php /*
 ini_set("session.use_only_cookies", 1);
 include_once($_SERVER["DOCUMENT_ROOT"]."/php/connection.php");
 
@@ -25,7 +25,7 @@ $code_out = explode("_", generate_unique_id())[1];
 
 if(isset($_COOKIE["google_user_email"])) {
     $nge = htmlentities($_COOKIE["google_user_email"]);
-    $nge_stmt = $pdo->prepare("SELECT * FROM stethoverflow_users WHERE user_email = ? LIMIT ?, ?");
+    $nge_stmt = $pdo->prepare("SELECT * FROM lessurl_users WHERE user_email = ? LIMIT ?, ?");
     $nge_stmt->execute([$nge, 0, 1]);
     $nge_data = $nge_stmt->fetch(PDO::FETCH_OBJ);
 
@@ -45,7 +45,7 @@ if(isset($_COOKIE["google_user_email"])) {
         $user_unique_id = generate_unique_id();
 
         //create(insert) new user
-        $create_user_stmt = $pdo->prepare("INSERT INTO stethoverflow_users(entry_date, real_name, `password`, user_email, profile_picture, unique_id) VALUES(?,?,?,?,?,?)");
+        $create_user_stmt = $pdo->prepare("INSERT INTO lessurl_users(entry_date, real_name, `password`, user_email, profile_picture, unique_id) VALUES(?,?,?,?,?,?)");
         $create_user_stmt->execute([date("Y-m-d H:i:s", time()), htmlentities($_COOKIE["google_user_name"]), "Goo--gle1",htmlentities($_COOKIE["google_user_email"]),htmlentities($_COOKIE["google_user_picture"]),$user_unique_id]);
 
         //delete google cookies:
@@ -64,7 +64,7 @@ if(isset($_COOKIE["google_user_email"])) {
 if((isset($_COOKIE["unique_id"]))){
     $user_unique_id = htmlentities($_COOKIE["unique_id"]);
 
-    $stmt = $pdo->prepare("SELECT * FROM stethoverflow_users WHERE unique_id = ? LIMIT ?, ?");
+    $stmt = $pdo->prepare("SELECT * FROM lessurl_users WHERE unique_id = ? LIMIT ?, ?");
     $stmt->execute([$user_unique_id, 0, 1]);
   
     $data = $stmt->fetch(PDO::FETCH_OBJ);
@@ -130,7 +130,7 @@ HTML;
 }  
 
 $user_real_name = "Guest user - <a href='/login'>Login</a> to continue";
-$user_bio = "Stethoverflow Guest User (2025 - present)";
+$user_bio = "lessurl Guest User (2025 - present)";
 
 if ($data) {
     $user_real_name = $data->real_name;
@@ -140,3 +140,5 @@ if ($data) {
 define("PROFILE_OR_SIGN_IN", $profile_or_sign_in);
 define("PROFILE_PICTURE", $profile_picture);
 define("DATA", $data);
+
+*/
