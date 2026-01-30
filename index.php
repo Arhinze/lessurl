@@ -201,7 +201,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <section class="generator-container">
         <div class="glass-card">
-        <div style="text-align:center"><b>lessurl.xyz</b></div>
+        <div style="text-align:center;margin-bottom:21px"><b>lessurl.xyz</b></div>
             <div style="margin-bottom: 25px;">
                 <label>Link Purpose</label>
                 <select id="typeSelector">
