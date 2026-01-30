@@ -110,6 +110,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .hidden { display: none; }
         #result { margin-top: 20px; padding: 15px; border-radius: 10px; text-align: center; font-weight: bold; }
         .success-box { background: #e7f9ed; color: #28a745; border: 1px solid #d4edda; }
+
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: 0.3s;
+            resize: vertical; /* Allows user to scale height, but not width */
+            min-height: 100px;
+            font-family: inherit;
+        }
+        
+        textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
     </style>
 </head>
 <body>
@@ -147,8 +164,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div id="whatsappGroup" class="hidden">
                     <label>Phone Number</label>
                     <input type="text" id="phone" placeholder="e.g. 2348012345678">
+                    
                     <label style="margin-top:10px">Default Message</label>
-                    <input type="text" id="message" placeholder="Hi, I'm interested in...">
+                    <textarea id="message" rows="4" placeholder="Hi! I'm interested in your services. Please provide more details..."></textarea>
                 </div>
 
                 <div>
@@ -225,6 +243,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 console.error(e);
             }
             btn.innerText = "Generate Short Link";
+        }
+
+        if (type === 'whatsapp') {
+            const phone = document.getElementById('phone').value.replace(/\D/g,''); // Clean non-digits
+            const msg = encodeURIComponent(document.getElementById('message').value);
+            // WhatsApp uses %20 for space and %0A for new lines, which encodeURIComponent handles perfectly
+            finalUrl = `https://wa.me/${phone}?text=${msg}`;
         }
     </script>
 </body>
