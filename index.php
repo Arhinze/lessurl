@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         /* Navigation */
         nav { background: var(--dark); padding: 1rem 10%; display: flex; justify-content: space-between; align-items: center; color: white; }
-        nav .logo { font-size: 1.2rem; font-weight: bold; color: var(--primary); }
+        nav .logo { font-size: 0.9rem; font-weight: bold; color: var(--primary); }
         nav a { color: white; text-decoration: none; margin-left: 20px; font-size: 0.9rem; }
 
         /* Hero Section */
