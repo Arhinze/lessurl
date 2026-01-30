@@ -7,6 +7,7 @@ include_once($_SERVER["DOCUMENT_ROOT"]."/php/account-manager.php");
 // 1. HANDLE REDIRECTION
 if (isset($_GET['url_path'])) {
     $path = htmlentities($_GET['url_path']);
+    echo $path;
     //$path = parse_url($url, PHP_URL_PATH);
     $link_stmt = $pdo->prepare("SELECT * FROM links WHERE custom_name = ?");
     $link_stmt->execute([$path]);
