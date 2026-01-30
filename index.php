@@ -200,6 +200,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </header>
 
     <section class="generator-container">
+        <div style="text-align:center"><b>lessurl.xyz</b></div>
         <div class="glass-card">
             <div style="margin-bottom: 25px;">
                 <label>Link Purpose</label>
