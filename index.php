@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         nav a { color: white; text-decoration: none; margin-left: 20px; font-size: 0.9rem; }
 
         /* Hero Section */
-        header { background: var(--dark); color: white; padding: 100px 10% 150px; text-align: center; }
+        header { background: var(--dark); color: white; padding: 70px 10% 90px; text-align: center; }
         header h1 { font-size: 3rem; margin-bottom: 1rem; }
         header p { font-size: 1.2rem; opacity: 0.8; max-width: 600px; margin: 0 auto 2rem; }
 
