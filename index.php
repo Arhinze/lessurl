@@ -28,9 +28,14 @@ if (isset($_GET['url_path'])) {
 
 // 2. HANDLE FORM SUBMISSION (API)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $long_url = $_POST['long_url'];
-    $custom_name = $_POST['custom_name'];
+    $long_url = htmlentities($_POST['long_url']);
+    $custom_name = htmlentities($_POST['custom_name']);
     $is_spa = isset($_POST['is_spa']) ? 1 : 0;
+
+    //$pre_stmt = $pdo->prepare("SELECT * FROM links WHERE custom_name = ? LIMIT 0, 1");
+    //$pre_stmt->execute([$custom_name]);
+    //$pre_stmt_data = $pre_stmt->fetch(PDO::FETCH_OBJ);
+    //if($pre_stmt_data) { }
 
     $stmt = $pdo->prepare("INSERT INTO links (custom_name, long_url, is_landing_page) VALUES (?, ?, ?)");
     if ($stmt->execute([$custom_name, $long_url, $is_spa])) {
@@ -162,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
                 <div id="whatsappGroup" class="hidden">
-                    <label>Phone Number</label>
+                    <label>Phone Number</label> (start with your country code without the +)
                     <input type="text" id="phone" placeholder="e.g. 2348012345678">
                     
                     <label style="margin-top:10px">Default Message</label>
@@ -216,8 +221,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const type = typeSelector.value;
 
             if (type === 'whatsapp') {
-                const phone = document.getElementById('phone').value;
+                const phone = document.getElementById('phone').value.replace(/\D/g,''); // Clean non-digits
                 const msg = encodeURIComponent(document.getElementById('message').value);
+                // WhatsApp uses %20 for space and %0A for new lines, which encodeURIComponent handles perfectly
                 finalUrl = `https://wa.me/${phone}?text=${msg}`;
             }
 
@@ -243,13 +249,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 console.error(e);
             }
             btn.innerText = "Generate Short Link";
-        }
-
-        if (type === 'whatsapp') {
-            const phone = document.getElementById('phone').value.replace(/\D/g,''); // Clean non-digits
-            const msg = encodeURIComponent(document.getElementById('message').value);
-            // WhatsApp uses %20 for space and %0A for new lines, which encodeURIComponent handles perfectly
-            finalUrl = `https://wa.me/${phone}?text=${msg}`;
         }
     </script>
 </body>
