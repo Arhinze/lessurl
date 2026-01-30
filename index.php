@@ -295,7 +295,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } catch (e) {
                 const resultDiv = document.getElementById('result');
                 resultDiv.className = "result-box error"; 
-                document.getElementById('result').innerText = "<i class='fas fa-exclamation-triangle'></i> Critical error: Could not connect to server. Tip: try another custom name";
+                document.getElementById('result').innerHTML = "<i class='fas fa-exclamation-triangle'></i> Critical error: Could not connect to server. Tip: try another custom name";
 
                 // Optional: Add a shake effect
                 resultDiv.style.animation = 'shake 0.5s';
