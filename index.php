@@ -200,10 +200,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </header>
 
     <section class="generator-container">
-        <div style="text-align:center"><b>lessurl.xyz</b></div>
         <div class="glass-card">
+        <div style="text-align:center"><b>lessurl.xyz</b></div>
             <div style="margin-bottom: 25px;">
-                <label>Link Purpose--</label>
+                <label>Link Purpose</label>
                 <select id="typeSelector">
                     <option value="standard">Standard URL Redirection</option>
                     <option value="whatsapp">WhatsApp Direct Link</option>
