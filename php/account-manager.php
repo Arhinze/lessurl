@@ -1,4 +1,4 @@
-<?php /*
+<?php
 ini_set("session.use_only_cookies", 1);
 include_once($_SERVER["DOCUMENT_ROOT"]."/php/connection.php");
 
@@ -140,5 +140,3 @@ if ($data) {
 define("PROFILE_OR_SIGN_IN", $profile_or_sign_in);
 define("PROFILE_PICTURE", $profile_picture);
 define("DATA", $data);
-
-*/
