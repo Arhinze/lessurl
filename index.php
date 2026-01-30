@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         /* Hero Section */
         header { background: var(--dark); color: white; padding: 50px 10% 80px; text-align: center; }
         header h1 { font-size: 3rem; margin-bottom: 1rem; }
-        header p { font-size: 1.2rem; opacity: 0.8; max-width: 600px; margin: 0 auto 2rem; }
+        header p { font-size: 1rem; opacity: 0.8; max-width: 600px; margin: 0 auto 2rem; }
 
         /* Generator Card - Beautified */
         .generator-container { margin-top: -100px; padding: 0 10%; }
