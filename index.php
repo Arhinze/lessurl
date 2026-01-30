@@ -293,6 +293,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     setTimeout(() => resultDiv.style.animation = '', 500);
                 }
             } catch (e) {
+                const resultDiv = document.getElementById('result');
                 resultDiv.className = "result-box error"; 
                 document.getElementById('result').innerText = "<i class='fas fa-exclamation-triangle'></i> Critical error: Could not connect to server. Tip: try another custom name";
 
