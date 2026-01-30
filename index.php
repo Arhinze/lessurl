@@ -14,8 +14,10 @@ if (isset($_GET['url_path'])) {
     if ($link_data) {
         // If it's a landing page, we might want to display content instead of redirecting
         if ($link_data->is_landing_page == 1) {
-            echo "<h1>Welcome to the Landing Page for: " . htmlspecialchars($path) . "</h1>";
-            echo "<p>Your SPA content goes here.</p>";
+            //Render the SPA content instead of redirecting
+            echo "<!DOCTYPE html><html><head><title>".$path."</title></head><body>";
+            echo $link_data->spa_content; 
+            echo "</body></html>";
             exit;
         }
         header("Location: ".$link_data->long_url);
@@ -37,13 +39,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $long_url = $_POST['long_url'];
         $custom_name = $_POST['custom_name'];
         $is_spa = isset($_POST['is_spa']) ? 1 : 0;
+        $spa_content = $_POST['spa_content'] ?? '';
+
+        if ($is_spa) {
+            $long_url = "https://lessurl.xyz/" . $custom_name; 
+        }
 
         if (empty($custom_name) || empty($long_url)) {
             throw new Exception("All fields are required.");
         }
 
-        $stmt = $pdo->prepare("INSERT INTO links (custom_name, long_url, is_landing_page) VALUES (?, ?, ?)");
-        $stmt->execute([$custom_name, $long_url, $is_spa]);
+        $stmt = $pdo->prepare("INSERT INTO links (custom_name, long_url, is_landing_page, spa_content) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$custom_name, $long_url, $is_spa, $spa_content]);
 
         echo json_encode(["status" => "success", "short_link" => "lessurl.xyz/" . $custom_name]);
 
@@ -205,8 +212,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="input-grid">
                 <div id="urlInputGroup">
-                    <label>Destination URL</label>
+                    <label id="urlLabel">Destination URL</label>
                     <input type="text" id="longUrl" placeholder="https://example.com/very-long-link">
+                </div>
+                
+                <div id="spaGroup" class="hidden">
+                    <label>Landing Page Content (HTML/Text)</label>
+                    <textarea id="spaContent" rows="6" placeholder="<h1>Welcome to my Page</h1><p>This is my SPA content...</p>"></textarea>
                 </div>
 
                 <div id="whatsappGroup" class="hidden">
@@ -250,9 +262,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         const typeSelector = document.getElementById('typeSelector');
         
         typeSelector.addEventListener('change', (e) => {
-            const isWA = e.target.value === 'whatsapp';
-            document.getElementById('urlInputGroup').classList.toggle('hidden', isWA);
-            document.getElementById('whatsappGroup').classList.toggle('hidden', !isWA);
+            const val = e.target.value;
+            
+            // Hide everything first
+            document.getElementById('urlInputGroup').classList.add('hidden');
+            document.getElementById('whatsappGroup').classList.add('hidden');
+            document.getElementById('spaGroup').classList.add('hidden');
+        
+            // Show only what's needed
+            if (val === 'standard') {
+                document.getElementById('urlInputGroup').classList.remove('hidden');
+            } else if (val === 'whatsapp') {
+                document.getElementById('whatsappGroup').classList.remove('hidden');
+            } else if (val === 'spa') {
+                document.getElementById('spaGroup').classList.remove('hidden');
+            }
         });
 
         async function createLink() {
@@ -261,6 +285,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             let finalUrl = document.getElementById('longUrl').value;
             const customName = document.getElementById('customName').value;
+            const spaContent = document.getElementById('spaContent').value;
             const type = typeSelector.value;
 
             if (type === 'whatsapp') {
@@ -273,6 +298,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const formData = new FormData();
             formData.append('long_url', finalUrl);
             formData.append('custom_name', customName);
+            formData.append('spa_content', spaContent);
             if (type === 'spa') formData.append('is_spa', '1');
 
             try {
