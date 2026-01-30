@@ -10,7 +10,7 @@ if (isset($_GET['url_path'])) {
     //$path = parse_url($url, PHP_URL_PATH);
     $link_stmt = $pdo->prepare("SELECT * FROM links WHERE custom_name = ?");
     $link_stmt->execute([$path]);
-    $link_data = $stmt->fetch(PDO::FETCH_OBJ);
+    $link_data = $link_stmt->fetch(PDO::FETCH_OBJ);
 
     if ($link_data) {
         // If it's a landing page, we might want to display content instead of redirecting
