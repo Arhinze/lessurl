@@ -26,22 +26,36 @@ if (isset($_GET['url_path'])) {
     }
 }
 
+//$pre_stmt = $pdo->prepare("SELECT * FROM links WHERE custom_name = ? LIMIT 0, 1");
+//$pre_stmt->execute([$custom_name]);
+//$pre_stmt_data = $pre_stmt->fetch(PDO::FETCH_OBJ);
+//if($pre_stmt_data) { }
+
 // 2. HANDLE FORM SUBMISSION (API)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $long_url = htmlentities($_POST['long_url']);
-    $custom_name = htmlentities($_POST['custom_name']);
-    $is_spa = isset($_POST['is_spa']) ? 1 : 0;
+    try {
+        $long_url = $_POST['long_url'];
+        $custom_name = $_POST['custom_name'];
+        $is_spa = isset($_POST['is_spa']) ? 1 : 0;
 
-    //$pre_stmt = $pdo->prepare("SELECT * FROM links WHERE custom_name = ? LIMIT 0, 1");
-    //$pre_stmt->execute([$custom_name]);
-    //$pre_stmt_data = $pre_stmt->fetch(PDO::FETCH_OBJ);
-    //if($pre_stmt_data) { }
+        if (empty($custom_name) || empty($long_url)) {
+            throw new Exception("All fields are required.");
+        }
 
-    $stmt = $pdo->prepare("INSERT INTO links (custom_name, long_url, is_landing_page) VALUES (?, ?, ?)");
-    if ($stmt->execute([$custom_name, $long_url, $is_spa])) {
-        echo json_encode(["status" => "success", "short_link" => "lessurl.xyz/".$custom_name]);
-    } else {
-        echo json_encode(["status" => "error", "message" => "Name already taken!"]);
+        $stmt = $pdo->prepare("INSERT INTO links (custom_name, long_url, is_landing_page) VALUES (?, ?, ?)");
+        $stmt->execute([$custom_name, $long_url, $is_spa]);
+
+        echo json_encode(["status" => "success", "short_link" => "lessurl.xyz/" . $custom_name]);
+
+    } catch (PDOException $e) {
+        // Error code 23000 is typically a 'Duplicate Entry' for a Unique column
+        if ($e->getCode() == 23000) {
+            echo json_encode(["status" => "error", "message" => "That alias is already taken! Try another one."]);
+        } else {
+            echo json_encode(["status" => "error", "message" => "Database error occurred."]);
+        }
+    } catch (Exception $e) {
+        echo json_encode(["status" => "error", "message" => $e->getMessage()]);
     }
     exit;
 }
@@ -131,6 +145,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         textarea:focus {
             border-color: var(--primary);
             outline: none;
+        }
+
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .success {
+            background: #e7f9ed;
+            color: #28a745;
+            border: 1px solid #d4edda;
+        }
+        
+        .error {
+            background: #fff5f5;
+            color: #d9534f;
+            border: 1px solid #f5c6cb;
+        }
+        
+        /* Shake Animation */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
     </style>
 </head>
@@ -237,17 +280,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 const data = await response.json();
                 
                 const resultDiv = document.getElementById('result');
+                
                 if (data.status === 'success') {
-                    resultDiv.className = "success-box";
-                    resultDiv.innerHTML = `Success! Your link: <a href="/${customName}" target="_blank">lessurl.xyz/${customName}</a>`;
+                    resultDiv.className = "result-box success"; // Green style
+                    resultDiv.innerHTML = `<i class="fas fa-check-circle"></i> Success! Your link: <a href="/${customName}" target="_blank">lessurl.xyz/${customName}</a>`;
                 } else {
-                    resultDiv.className = "";
-                    resultDiv.style.color = "red";
-                    resultDiv.innerText = data.message;
+                    resultDiv.className = "result-box error"; // Red style
+                    resultDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${data.message}`;
+                    
+                    // Optional: Add a shake effect
+                    resultDiv.style.animation = 'shake 0.5s';
+                    setTimeout(() => resultDiv.style.animation = '', 500);
                 }
             } catch (e) {
-                console.error(e);
+                document.getElementById('result').innerText = "Critical error: Could not connect to server.";
             }
+
             btn.innerText = "Generate Short Link";
         }
     </script>
